@@ -1,0 +1,3 @@
+../oap_release_performance_test
+REMOVE:all
+ADD:oap-cache/TPCDS_3TB_parquet_DCPMM_Guava_Binary,oap-cache/TPCDS_3TB_parquet_DCPMM_Guava_ColumnVector, oap-cache/TPCDS_3TB_parquet_DCPMM_Plasma_Binary,oap-cache/TPCDS_3TB_parquet_DCPMM_Plasma_ColumnVector, oap-cache/TPCDS_3TB_parquet_DCPMM_VM_Binary,oap-cache/TPCDS_3TB_parquet_DCPMM_VM_ColumnVector, oap-dataGen/oap_cache_TPCDS_parquet_3TB

@@ -1,0 +1,4 @@
+scale 3000
+partitionTables false
+format parquet
+queries 26,27,68,42,53,32,76,48,55

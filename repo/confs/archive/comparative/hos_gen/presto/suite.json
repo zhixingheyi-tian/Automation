@@ -1,0 +1,7 @@
+{
+        "tpc_ds":{
+                "query": ["query*.*"],
+                "schema": [ "tpcds_bin_partitioned_{fileformat}_{scale}" ],
+                "session": {}
+        }
+}

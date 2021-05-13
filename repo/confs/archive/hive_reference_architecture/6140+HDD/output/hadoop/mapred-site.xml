@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<configuration>
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+  <property>
+    <name>mapreduce.jobhistory.address</name>
+    <value>sr121:10020</value>
+  </property>
+  <property>
+    <name>mapreduce.jobhistory.webapp.address</name>
+    <value>sr121:19888</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.vmem-pmem-ratio</name>
+    <value>4</value>
+  </property>
+  <property>
+    <name>mapreduce.map.memory.mb</name>
+    <value>3072</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.memory.mb</name>
+    <value>3072</value>
+  </property>
+  <property>
+    <name>mapreduce.task.io.sort.mb</name>
+    <value>1229</value>
+  </property>
+  <property>
+    <name>mapreduce.map.java.opts.max.heap</name>
+    <value>2560</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.java.opts.max.heap</name>
+    <value>2560</value>
+  </property>
+  <property>
+    <name>mapreduce.map.java.opts</name>
+    <value>-Xmx3276m</value>
+  </property>
+  <property>
+    <name>mapreduce.reduce.java.opts</name>
+    <value>-Xmx3276m</value>
+  </property>
+</configuration>

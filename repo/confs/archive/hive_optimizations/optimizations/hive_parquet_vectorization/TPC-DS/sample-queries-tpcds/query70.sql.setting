@@ -1,0 +1,2 @@
+set hive.groupby.skewindata=true;
+set hive.exec.reducers.max=2000;

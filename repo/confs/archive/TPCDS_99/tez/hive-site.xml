@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<configuration>
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:mysql://bdpe101:3306/metastore?createDatabaseIfNotExist=true</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.jdbc.Driver</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>root</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>123456</value>
+  </property>
+  <property>
+    <name>datanucleus.autoCreateSchema</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>datanucleus.autoCreateTables</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>datanucleus.autoStartMechanism</name>
+    <value>SchemaTable</value>
+  </property>
+  <property>
+    <name>datanucleus.fixedDatastore</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://bdpe101:9083</value>
+  </property>
+  <property>
+    <name>hive.metastore.schema.verification</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>hive.execution.engine</name>
+    <value>tez</value>
+  </property>
+  <property>
+     <name>hive.llap.execution.mode</name>
+     <value>all</value>
+  </property>
+  <property>
+     <name>hive.execution.mode</name>
+     <value>llap</value>
+  </property>
+   <property>
+     <name>hive.llap.daemon.service.hosts</name>
+     <value>@llap_service</value>
+  </property>
+  <property>
+     <name>hive.zookeeper.quorum</name>
+     <value>bdpe101:2181,bdpe102:2181,bdpe71:2181,bdpe72:2181,bdpe81:2181,bdpe82:2181,bdpe91:2181,bdpe92:2181</value>
+  </property>
+
+  <property>
+     <name>hive.server2.tez.default.queues</name>
+     <value>default</value>
+  </property>
+  <property>
+     <name>hive.server2.tez.initialize.default.sessions</name>
+     <value>true</value>
+  </property>
+  <property>
+     <description>Set to the number of concurrent queries to run on the queues that
+           are configured by hive.server2.tez.default.queues. This setting launches
+           long-running Tez AMs (sessions).
+     </description>
+     <name>hive.server2.tez.sessions.per.default.queue</name>
+     <value>2</value>
+  </property>
+<property>
+     <name>hive.llap.io.enable</name>
+     <value>true</value>
+  </property>
+</configuration>

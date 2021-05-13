@@ -1,0 +1,2 @@
+set hive.auto.convert.join.noconditionaltask.size=3000000;
+

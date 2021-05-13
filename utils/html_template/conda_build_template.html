@@ -1,0 +1,20 @@
+<meta http-equiv="Content-Type"content="text/html;charset=utf-8">
+<html align='left'>
+    <body>
+    <table border="1" width = "40%" cellspacing='0' cellpadding='0' align='left'>
+    <tr >
+        <th Bgcolor=#E6E6FA>Target-version</th>
+        <th Bgcolor=#E6E6FA>Status</th>
+        <th Bgcolor=#E6E6FA>Location</th>
+    </tr>
+
+    {% for item in body %}
+    <tr align='center'>
+        <td>{{ item.version }}</td>
+        <td style="color: {{ item.color }}">{{ item.status }}</td>
+        <td><a href={{ item.link }}> Location</a></td>
+    </tr>
+    {% endfor%}
+    </table>
+    </body>
+</html>

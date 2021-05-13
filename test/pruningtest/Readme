@@ -1,0 +1,7 @@
+Please run pruningtestHoS.py to deploy the relative HoS.
+Then you can cd into Beaver/test/pruningtest and run pruningtestgen.sh to gen data
+(args1: the root directory abspath/Beaver/test/pruningtest.
+args2: hive address like hdfs://bdpe**:9000.
+args3: the data scale you want to gen, 1 means 1g.)
+Last you can run pruningtestRun.sh using arguments like "1 2 3" to run the test by selecting "a.a1 a.a2 a.a3" in nested column database a.
+result will be put into /opt/Beaver/result/pruningtest.

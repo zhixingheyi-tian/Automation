@@ -1,0 +1,3 @@
+scale 3000
+partitionTables false
+format parquet

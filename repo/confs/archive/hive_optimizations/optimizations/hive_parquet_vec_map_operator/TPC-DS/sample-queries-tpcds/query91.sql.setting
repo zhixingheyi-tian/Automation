@@ -1,0 +1,1 @@
+set mapred.max.split.size=67108864;

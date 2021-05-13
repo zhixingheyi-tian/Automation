@@ -1,0 +1,6 @@
+scale 3000
+partitionTables false
+format parquet
+build yes
+generate yes
+presto_master_port 8080

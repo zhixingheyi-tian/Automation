@@ -1,0 +1,6 @@
+scale 1536
+format parquet
+partitionTables false
+partition 300
+queries 6,9,23,29,64,67,78,80,93
+useDoubleForDecimal true

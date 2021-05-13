@@ -1,0 +1,3 @@
+set mapred.max.split.size=8388608;
+set hive.exec.reducers.bytes.per.reducer=8388608;
+set hive.exec.reducers.max=1000000000;

@@ -1,0 +1,2 @@
+-- workaround for IllegalStateException
+set hive.vectorized.execution.reduce.enabled=false;

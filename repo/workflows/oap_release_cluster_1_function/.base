@@ -1,0 +1,3 @@
+../oap_release_function_test
+REMOVE:all
+ADD: oap-cache/DailyTest_200GB_DCPMM_Guava, oap-cache/DailyTest_200GB_DCPMM_VM, oap-dataGen/oap_cache_200GB

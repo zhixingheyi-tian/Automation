@@ -1,0 +1,1 @@
+use tpch_arrow_scale_{%scale%}_db;

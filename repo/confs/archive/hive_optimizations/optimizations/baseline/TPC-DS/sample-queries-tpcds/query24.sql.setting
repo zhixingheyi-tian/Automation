@@ -1,0 +1,2 @@
+set hive.exec.reducers.bytes.per.reducer=33554432;
+set hive.exec.reducers.max=1000000000;

@@ -1,0 +1,3 @@
+../oap_release_performance_test
+REMOVE:all
+ADD:oap-dataGen/oap_cache_TPCDS_parquet_3TB, oap-dataGen/oap_native_sql_and_arrow_data_source_TPCH_parquet_1.5TB, oap-native-sql/TPCH_1.5TB_parquet_NATIVE_SQL_ENGINE_Throughput, oap-native-sql/TPCH_1.5TB_parquet_NATIVE_SQL_ENGINE_Throughput_Baseline, oap-cache/TPCDS_3TB_parquet_DCPMM_Plasma_ColumnVector_Throughput, oap-cache/TPCDS_3TB_parquet_DCPMM_Plasma_ColumnVector_Throughput_Baseline

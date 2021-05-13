@@ -1,0 +1,2 @@
+set mapreduce.input.fileinputformat.split.maxsize=67108864;
+set hive.exec.reducers.max=4000;

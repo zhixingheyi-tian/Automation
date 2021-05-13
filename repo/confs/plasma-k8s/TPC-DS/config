@@ -1,0 +1,5 @@
+scale 1
+partitionTables false
+format parquet
+generate yes
+queries 26,27,68,42,53,32,76,48,55

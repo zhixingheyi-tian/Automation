@@ -1,0 +1,4 @@
+scale 3000
+format parquet
+build no
+generate no

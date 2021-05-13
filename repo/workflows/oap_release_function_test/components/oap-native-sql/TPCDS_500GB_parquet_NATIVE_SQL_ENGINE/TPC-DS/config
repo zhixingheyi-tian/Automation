@@ -1,0 +1,6 @@
+scale 500
+format parquet
+partitionTables false
+partition 100
+queries all
+useDoubleForDecimal true

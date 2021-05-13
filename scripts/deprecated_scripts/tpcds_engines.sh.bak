@@ -1,0 +1,113 @@
+#!/bin/bash
+#parameter=$(echo $1|sed 's/,/ /g')
+path=$(dirname $0)
+path=${path/\./$(pwd)}
+#echo $path
+date=$(date --date="+1 day" +"%Y-%m-%d")
+backupdir="/opt/New_emerging_SQL_comparative_analysis"
+PATDIR="/opt/Beaver/PAT"
+BEAVER_PATH="/home/Big_Data_SQL_Comparative/Beaver"
+
+export PYTHONPATH=$PYTHONPATH:$BEAVER_PATH
+check_run(){
+    network_speed=$(pssh -i -h /opt/Beaver/hadoop/etc/hadoop/slaves 'ethtool ens802f0'|grep 'Speed:*.10000Mb'|wc -l)
+    echo $network_speed
+    if [ X$network_speed != 'X7' ]; then
+        echo 'some datanode ens802f0 Speed not 10000Mb!'
+        exit 0
+    fi
+    mount |grep $backupdir > /dev/null
+    if [ $? -eq 1 ]; then
+        echo "mount samba client data /opt/New_emerging_SQL_comparative_analysis" 1>&2
+        mount -t cifs  //$PACKAGE_SERVER/New_emerging_SQL_comparative_analysis /opt/New_emerging_SQL_comparative_analysis/ -o username=smbuser,password=bdpe123
+    fi
+    ansible bdpe -m shell -a 'echo 3 > /proc/sys/vm/drop_caches && swapoff -a'
+}
+stop_server(){
+    slider stop llap_service
+    ansible bdpe -m shell -a 'source $IMPALA_HOME/bin/impala-config.sh && $IMPALA_HOME/bin/start-impala-cluster.py –kill'
+    wait
+    ansible bdpe -m shell -a '$PRESTO_HOME/bin/launcher stop'
+    wait
+}
+function pat_run() {
+    # cmd=`echo ${@:1}`
+    cmd=$1
+    engine=$2
+    # echo $cmd,$engine
+    sed -i "/^CMD_PATH:/cCMD_PATH: $cmd" $PATDIR/PAT-collecting-data/config
+    cd $PATDIR/PAT-collecting-data && ./pat run $engine
+    wait
+    echo $L
+
+    pdfdir="<source>$PATDIR/PAT-collecting-data/results/${engine}/instruments/</source>"
+    sed -i "/<source>/c$pdfdir" $PATDIR/PAT-post-processing/config.xml
+    cd $PATDIR/PAT-post-processing && ./pat-post-process.py
+    # wait
+    cp $PATDIR/PAT-collecting-data/results/$engine/instruments/PAT-Result.pdf $backupdir/logs/${engine}/${date}/${engine}_${date}.pdf
+    # python /opt/Beaver/feiren_tpcds_queries/format_ds_result.py $backupdir/logs/${engine}/${date}/
+    # wait
+    # mv $PATDIR/PAT-collecting-data/results/${engine}{,_$date}
+}
+
+impala_log() {
+    for host in bdpe101 bdpe102 bdpe71 bdpe72 bdpe81 bdpe82 bdpe91 bdpe92;do
+        mkdir -p $backupdir/logs/Impala/${date}/Full_log/${host}
+        scp root@${host}:/opt/Beaver/impala/logs/cluster/*.log* $backupdir/logs/Impala/${date}/Full_log/${host}
+    done
+}
+
+run_Impala(){
+    ansible bdpe -m shell -a 'rm -rf /opt/Beaver/impala/logs/cluster/*'
+    mkdir -p $backupdir/logs/Impala/${date}/{Full_log,Query_log}
+    $BEAVER_PATH/cluster/Impala.py update_and_run $BEAVER_PATH/repo/TPCDS_99/
+    sleep 5
+    wait
+    cmd="/opt/Beaver/feiren_tpcds_queries/run_impala.sh"
+    pat_run $cmd $1
+    # cp $PATDIR/PAT-collecting-data/results/$1_${date}/instruments/PAT-Result.pdf $backupdir/logs/$1_${date}.pdf
+    impala_log
+}
+
+run_Presto() {
+    mkdir -p $backupdir/logs/$1/${date}
+    $BEAVER_PATH/cluster/Presto.py update_and_run $BEAVER_PATH/repo/TPCDS_99/
+    wait
+    sleep 1m
+    cmd="/opt/Beaver/feiren_tpcds_queries/run_presto.sh"
+    pat_run $cmd $1
+    # cp $PATDIR/PAT-collecting-data/results/$1_${date}/instruments/PAT-Result.pdf $backupdir/logs/$1_${date}.pdf
+}
+run_Sparksql() {
+    mkdir -p $backupdir/logs/$1/${date}
+    /opt/Beaver/spark-Phive/sbin/start-thriftserver.sh
+    sleep 1m
+    #$BEAVER_PATH/benchmark/TPCDSonSparkSQL.py update_and_run $BEAVER_PATH/repo/TPCDS_99/
+    cmd="/opt/Beaver/feiren_tpcds_queries/run_sparksql.sh"
+    pat_run $cmd $1
+    # cp $PATDIR/PAT-collecting-data/results/$1_${date}/instruments/PAT-Result.pdf $backupdir/logs/$1_${date}.pdf
+}
+run_LLAP() {
+    mkdir -p $backupdir/logs/$1/${date}
+    sh /opt/Beaver/llap_run.sh
+    wait
+    sleep 1m
+    #$BEAVER_PATH/benchmark/TPCDSonSparkSQL.py update_and_run $BEAVER_PATH/repo/TPCDS_99/
+    cmd="/opt/Beaver/feiren_tpcds_queries/run_llap.sh"
+    pat_run $cmd $1
+    # cp $PATDIR/PAT-collecting-data/results/$1_${date}/instruments/PAT-Result.pdf $backupdir/logs/$1_${date}.pdf
+}
+# engines=$(echo $1|sed 's/,/ /g')
+echo $engines
+if [ $1 ];then
+    check_run
+    stop_server
+    engines=$(echo $1|sed 's/,/ /g')
+    for i in $engines; do
+        run_$i $i
+        wait
+    done
+else
+    echo '$0 [Impala,Presto,Sparksql,LLAP]'
+fi
+

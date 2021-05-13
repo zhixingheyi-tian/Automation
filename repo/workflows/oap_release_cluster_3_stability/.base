@@ -1,0 +1,3 @@
+../oap_release_performance_test
+REMOVE:all
+ADD:oap-native-sql/TPCH_1.5TB_parquet_NATIVE_SQL_ENGINE, oap-dataGen/oap_native_sql_and_arrow_data_source_TPCH_parquet_1.5TB

@@ -1,0 +1,4 @@
+pretend_mode=0
+show_command_stdout=0
+workload=workload_detail
+power_test_0=query_list

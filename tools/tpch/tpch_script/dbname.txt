@@ -1,0 +1,1 @@
+use tpch_{%data.format%}_scale_{%scale%}_db;
